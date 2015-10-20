@@ -3,4 +3,4 @@ all: scanner.l
 	gcc lex.yy.c
 
 clean:
-	rm lex.yy.c *.out
+	rm -f lex.yy.c *.out
