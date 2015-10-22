@@ -1,0 +1,5 @@
+# generate by lex
+lex.yy.c
+
+# generate by gcc
+*.out
