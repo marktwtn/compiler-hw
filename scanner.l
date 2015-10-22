@@ -4,9 +4,12 @@ int lineNum=0;
 
 %%
 
-\n {lineNum++;}
-char|int|short|long|float|double|void { printf("\nData type\n"); }
-return { printf("\nReturn token\n"); }
+\n {lineNum++;printf("\n");}
+# { ECHO; }
+include { ECHO; }
+[<[a-zA-Z]*/.h>] { ECHO; }
+char|int|short|long|float|double|void { ECHO; }
+return { ECHO; }
 
 %%
 
