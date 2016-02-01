@@ -55,7 +55,7 @@ int yywrap(){
 
 // I define this function for easier code reading.
 int yyecho(){
-  printf("%d : ",lineNum);
+  printf("%-3d : ",lineNum);
   printf("%s",yytext); // In the rule section, it can be replaced by 'ECHO;'.
   printf("\n");
 }
