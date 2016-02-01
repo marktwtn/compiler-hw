@@ -13,7 +13,9 @@ include { yyecho(); }
 \<[a-zA-Z]*\.h\> { yyecho(); }
 char|int|short|long|float|double|void { yyecho(); }
 return { yyecho(); }
+[+]|[-]|[*]|[/]|[=]|[;]|[(]|[)]|[{]|[}] { yyecho(); }
 [a-zA-Z]* { yyecho(); }
+[1-9][0-9]* { yyecho(); }
 
 %%
 
