@@ -26,6 +26,7 @@ return { yyecho(); }
 "," |
 "'" { yyecho(); }
 [a-zA-Z]* { yyecho(); }
+0 |
 [1-9][0-9]* { yyecho(); }
 . { printf("Scanner did not scan this\n");
     yyecho(); }
