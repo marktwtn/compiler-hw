@@ -7,7 +7,7 @@ int lineNum=1;
 %%
 
 \n { lineNum++; }
-[ \t] ;
+[ \t]+ ;
 # { yyecho(); }
 include { yyecho(); }
 \<[a-zA-Z]*\.h\> { yyecho(); }
@@ -16,6 +16,8 @@ return { yyecho(); }
 [+]|[-]|[*]|[/]|[=]|[;]|[(]|[)]|[{]|[}] { yyecho(); }
 [a-zA-Z]* { yyecho(); }
 [1-9][0-9]* { yyecho(); }
+. { printf("Scanner did not scan this\n");
+    yyecho(); }
 
 %%
 
