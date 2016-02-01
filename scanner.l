@@ -23,7 +23,8 @@ return { yyecho(); }
 ")" |
 "{" |
 "}" |
-"," { yyecho(); }
+"," |
+"'" { yyecho(); }
 [a-zA-Z]* { yyecho(); }
 [1-9][0-9]* { yyecho(); }
 . { printf("Scanner did not scan this\n");
