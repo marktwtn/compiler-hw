@@ -1,4 +1,6 @@
 %{
+int yyecho();
+
 int lineNum=1;
 %}
 
@@ -6,28 +8,28 @@ int lineNum=1;
 
 \n { lineNum++; }
 [ \t] ;
-# { printf("%d : ",lineNum);
-    ECHO;
-    printf("\n"); }
-include { printf("%d : ",lineNum);
-          ECHO;
-          printf("\n"); }
-\<[a-zA-Z]*\.h\> { printf("%d : ",lineNum);
-                   ECHO;
-                   printf("\n"); }
-char|int|short|long|float|double|void { printf("%d : ",lineNum);
-                                        ECHO;
-                                        printf("\n"); }
-return { printf("%d : ",lineNum);
-         ECHO;
-         printf("\n"); }
+# { yyecho(); }
+include { yyecho(); }
+\<[a-zA-Z]*\.h\> { yyecho(); }
+char|int|short|long|float|double|void { yyecho(); }
+return { yyecho(); }
+[a-zA-Z]* { yyecho(); }
 
 %%
 
+// yylex() is the function of lexical analyzer.
 int main(void){
   yylex();
 }
 
+// 'return 1' means the input is ended.
 int yywrap(){
   return 1;
+}
+
+// I define this function for easier code reading.
+int yyecho(){
+  printf("%d : ",lineNum);
+  printf("%s",yytext); // In the rule section, it can be replaced by 'ECHO;'.
+  printf("\n");
 }
