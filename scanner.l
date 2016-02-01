@@ -4,7 +4,17 @@ int yyecho();
 int lineNum=1;
 %}
 
+%x COMMENT_S
+%x COMMENT_M
+
 %%
+
+[ \t]*"//" { BEGIN COMMENT_S; }
+[ \t]*"/*" { BEGIN COMMENT_M; }
+<COMMENT_S>\n { BEGIN 0; }
+<COMMENT_S>. {;}
+<COMMENT_M>"*/" { BEGIN 0; }
+<COMMENT_M>. {;}
 
 \n { lineNum++; }
 [ \t]+ ;
