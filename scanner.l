@@ -40,7 +40,7 @@ return { yyecho(); }
 "'" |
 [<] |
 [>] { yyecho(); }
-{letter}* { yyecho(); }
+[[:alpha:]]* { yyecho(); }
 0 |
 [1-9]{digit}* { yyecho(); }
 . { printf("Scanner did not scan this\n");
