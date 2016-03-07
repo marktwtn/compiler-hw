@@ -7,6 +7,9 @@ int lineNum=1;
 %x COMMENT_S
 %x COMMENT_M
 
+letter [a-zA-Z]
+digit  [0-9]
+
 %%
 
 [ \t]*"//" { BEGIN COMMENT_S; }
@@ -20,7 +23,7 @@ int lineNum=1;
 [ \t]+ ;
 # { yyecho(); }
 include { yyecho(); }
-\<[a-zA-Z]*\.h\> { yyecho(); }
+{letter}+\.h { yyecho(); }
 char|int|short|long|float|double|void { yyecho(); }
 return { yyecho(); }
 "+" |
@@ -34,10 +37,12 @@ return { yyecho(); }
 "{" |
 "}" |
 "," |
-"'" { yyecho(); }
-[a-zA-Z]* { yyecho(); }
+"'" |
+[<] |
+[>] { yyecho(); }
+{letter}* { yyecho(); }
 0 |
-[1-9][0-9]* { yyecho(); }
+[1-9]{digit}* { yyecho(); }
 . { printf("Scanner did not scan this\n");
     yyecho(); }
 
