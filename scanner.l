@@ -12,19 +12,25 @@ digit  [0-9]
 
 %%
 
-[ \t]*"//" { BEGIN COMMENT_S; }
-[ \t]*"/*" { BEGIN COMMENT_M; }
-<COMMENT_S>\n { BEGIN 0; }
-<COMMENT_S>. {;}
+[ \t]*"//"      { BEGIN COMMENT_S; }
+[ \t]*"/*"      { BEGIN COMMENT_M; }
+<COMMENT_S>"\n" { BEGIN 0; }
+<COMMENT_S>.    {;}
 <COMMENT_M>"*/" { BEGIN 0; }
-<COMMENT_M>. {;}
+<COMMENT_M>.    {;}
 
 \n { lineNum++; }
-[ \t]+ ;
+[ \t]+ { ; }
 # { yyecho(); }
 include { yyecho(); }
 {letter}+\.h { yyecho(); }
-char|int|short|long|float|double|void { yyecho(); }
+char |
+int |
+short |
+long |
+float |
+double |
+void { yyecho(); }
 return { yyecho(); }
 "+" |
 "-" |
@@ -38,12 +44,12 @@ return { yyecho(); }
 "}" |
 "," |
 "'" |
-[<] |
-[>] { yyecho(); }
+"<" |
+">" { yyecho(); }
 [[:alpha:]]* { yyecho(); }
 0 |
 [1-9]{digit}* { yyecho(); }
-. { printf("Scanner did not scan this\n");
+. { printf("Scanner did not scan this character.\n");
     yyecho(); }
 
 %%
@@ -51,6 +57,7 @@ return { yyecho(); }
 // yylex() is the function of lexical analyzer.
 int main(void){
   yylex();
+  return 0;
 }
 
 // 'return 1' means the input is ended.
@@ -61,6 +68,6 @@ int yywrap(){
 // I define this function for easier code reading.
 int yyecho(){
   printf("%-3d : ",lineNum);
-  printf("%s",yytext); // In the rule section, it can be replaced by 'ECHO;'.
+  printf("%s",yytext); // It can be replaced by 'ECHO;'.
   printf("\n");
 }
