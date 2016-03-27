@@ -1,8 +1,10 @@
 %{
 int yyecho();
-
-int lineNum=1;
 %}
+
+/* If the rule section does not scan '\n',
+   then yylineno will remain the same.*/
+%option yylineno
 
 %x COMMENT_S
 %x COMMENT_M
@@ -19,7 +21,7 @@ digit  [0-9]
 <COMMENT_M>"*/" { BEGIN 0; }
 <COMMENT_M>.    {;}
 
-\n { lineNum++; }
+\n { ; }
 [ \t]+ { ; }
 # { yyecho(); }
 include { yyecho(); }
@@ -67,7 +69,7 @@ int yywrap(){
 
 // I define this function for easier code reading.
 int yyecho(){
-  printf("%-3d : ",lineNum);
-  printf("%s",yytext); // It can be replaced by 'ECHO;'.
+  printf("%-3d : ", yylineno);
+  printf("%s", yytext); // It can be replaced by 'ECHO;'.
   printf("\n");
 }
