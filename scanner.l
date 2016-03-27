@@ -17,9 +17,10 @@ digit  [0-9]
 [ \t]*"//"      { BEGIN COMMENT_S; }
 [ \t]*"/*"      { BEGIN COMMENT_M; }
 <COMMENT_S>"\n" { BEGIN 0; }
-<COMMENT_S>.    {;}
+<COMMENT_S>.    { ; }
 <COMMENT_M>"*/" { BEGIN 0; }
-<COMMENT_M>.    {;}
+<COMMENT_M>"\n" { ; }
+<COMMENT_M>.    { ; }
 
 \n { ; }
 [ \t]+ { ; }
