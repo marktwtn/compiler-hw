@@ -1,4 +1,5 @@
 %{
+#include "y.tab.h"
 int yyecho();
 %}
 
@@ -33,7 +34,7 @@ short |
 long |
 float |
 double |
-void { yyecho(); }
+void { yyecho();return TYPE; }
 return { yyecho(); }
 "+" |
 "-" |
@@ -48,20 +49,20 @@ return { yyecho(); }
 "," |
 "'" |
 "<" |
-">" { yyecho(); }
-[[:alpha:]]* { yyecho(); }
+">" { yyecho(); return yytext[0]; }
+[[:alpha:]]* { yyecho();return VAR; }
 0 |
-[1-9]{digit}* { yyecho(); }
+[1-9]{digit}* { yyecho();return NUM; }
 . { printf("Scanner did not scan this character.\n");
     yyecho(); }
 
 %%
 
 // yylex() is the function of lexical analyzer.
-int main(void){
+/*int main(void){
   yylex();
   return 0;
-}
+}*/
 
 // 'return 1' means the input is ended.
 int yywrap(){
